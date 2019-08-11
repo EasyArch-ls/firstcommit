@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.Teacher">
+    <select id="login" parameterType="String" resultType="org.bean.Teachers" >
+        select * from teachers where name=#{name} and password=#{password}
+
+    </select>
+
+    <select id="email" parameterType="String" resultType="org.bean.Teachers">
+        select * from teachers where email=#{email}
+    </select>
+
+    <select id="findemail" parameterType="String" >
+        select * from teachers where email=#{email}
+    </select>
+
+    <insert id="insert" parameterType="org.bean.Teachers" >
+        insert into teachers (name, password,phone, email, college) values
+        (#{name},#{password},#{phone},#{email},#{college})
+    </insert>
+
+    <update id="update" parameterType="String" >
+        update teachers
+        <set>
+            <if test="name">
+                name =#{name},
+            </if>
+            <if test="password!=null">
+                password=#{password},
+            </if>
+            <if test="phone!=null">
+                phone=#{phone},
+            </if>
+            <if test="email!=null">
+                 email=#{email},
+            </if>
+            <if test="college!=null">
+                 college=#{college}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="deletet" parameterType="String" >
+		delete from students where id=#{id}
+    </delete>
+
+</mapper>

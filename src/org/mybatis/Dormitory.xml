@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.Dormitory">
+
+    <select id="findAlls"  resultType="org.bean.Students">
+        select * from students
+    </select>
+
+    <select id="findAlld"  resultType="org.bean.Dormitories">
+        select * from dormitories
+    </select>
+    <select id="findAllt"  resultType="org.bean.Teachers">
+        select * from teachers
+    </select>
+
+    <select id="findwords" parameterType="String" resultType="org.bean.Students">
+        select * from students
+        <where>
+
+            <if test="bid!=null">
+                or bid like concat(concat('%',#{word}),'%')
+            </if>
+            <if test="sid!=null">
+                or sid like concat(concat('%',#{word}),'%')
+            </if>
+            <if test="cid!=null">
+                or cid like concat(concat('%',#{word}),'%')
+            </if>
+            <if test="name!=null">
+                or name like concat(concat('%',#{word}),'%')
+            </if>
+            <if test="phone!=null">
+                or phone like concat(concat('%',#{word}),'%')
+            </if>
+            <if test="number!=null">
+                or number like concat(concat('%',#{word}),'%')
+            </if>
+
+            <if test="sex!=null">
+                or sex=like concat(concat('%',#{word}),'%')
+            </if>
+
+            <if test="college!=null">
+                or college=like concat(concat('%',#{word}),'%')
+            </if>
+
+            <if test="other!=null">
+                or other like concat(concat('%',#{word}),'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="dlogin" parameterType="String" resultType="String">
+         select name from manager where name=#{name} and password=#{password}
+    </select>
+
+    <select id="findemail" parameterType="String" resultType="org.bean.Manager">
+        select * from manager where email=#{email}
+    </select>
+
+<insert id="dinsert" parameterType="String">
+     insert into dormitories (bid, sid,tfuze,pfuze,pnumber,pphone,tphone) values
+        (#{bid},#{sid},#{tfuze},#{pfuze},#{pnumber},#{pphone},#{tphone})
+</insert>
+    <update id="dupdate" parameterType="String" >
+        update dormitories
+        <set>
+            <if test="bid">
+                bid =#{bid},
+            </if>
+            <if test="sid!=null">
+                sid=#{sid},
+            </if>
+            <if test="tfuze!=null">
+                tfuze=#{tfuze},
+            </if>
+            <if test="ffuze!=null">
+                ffuze=#{ffuze},
+            </if>
+            <if test="pnumber!=null">
+                pnumber=#{pnumber},
+            </if>
+            <if test="pphone!=null">
+                pphone=#{pphone},
+            </if>
+            <if test="tphone!=null">
+                tphone=#{tphone}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+</mapper>

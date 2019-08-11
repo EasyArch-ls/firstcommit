@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.Student">
+
+    <select id="findword" parameterType="String" resultType="org.bean.Students">
+		select * from students
+		<where>
+            college=#{college}
+            <if test="bid!=null">
+                or bid like concat(concat('%',#{word}),'%'),
+            </if>
+            <if test="sid!=null">
+                or sid like concat(concat('%',#{word}),'%'),
+            </if>
+            <if test="cid!=null">
+                or cid like concat(concat('%',#{word}),'%'),
+            </if>
+            <if test="name!=null">
+                or name like concat(concat('%',#{word}),'%'),
+            </if>
+            <if test="phone!=null">
+                or phone like concat(concat('%',#{word}),'%'),
+            </if>
+            <if test="number!=null">
+                or number like concat(concat('%',#{word}),'%'),
+            </if>
+
+            <if test="sex!=null">
+                or sex=like concat(concat('%',#{word}),'%'),
+            </if>
+
+            <if test="other!=null">
+                or other like concat(concat('%',#{word}),'%'),
+            </if>
+        </where>
+	</select>
+
+    <select id="findAll" parameterType="String" resultType="org.bean.Students">
+        select * from students where college=#{college}
+    </select>
+
+    <delete id="delete" parameterType="String" >
+		delete from students
+        <where>
+            <if test="college!=null">
+                college=#{college}
+            </if>
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+        </where>
+    </delete>
+
+    <insert id="insert" parameterType="org.bean.Students" >
+        insert into students (bid, sid, cid, name, sex,phone, number, college, other) values
+        (#{bid},#{sid},#{cid},#{name},#{sex},#{phone},#{number},#{college},#{other})
+    </insert>
+
+    <update id="update" parameterType="String">
+        update students
+        <trim prefix="set" suffixOverrides=",">
+            <if test="bid!=null">
+                 bid=#{bid},
+            </if>
+            <if test="sid!=null">
+                 sid=#{sid},
+            </if>
+            <if test="cid!=null">
+                cid=#{cid},
+            </if>
+            <if test="name!=null">
+                 name=#{name},
+            </if>
+            <if test="phone!=null">
+                 phone=#{phone},
+            </if>
+            <if test="other!=null">
+                 other=#{other}
+            </if>
+        </trim>
+        <where>
+            <if test="college!=''">
+            college=#{college}
+            </if>
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+        </where>
+    </update>
+
+</mapper>
